@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>下班倒计时</title>
+<style>
+  @font-face {
+  font-family: 'LkHappy'; 
+  src: url('fonts/font.ttf') format('truetype');  
+  font-weight: normal;  
+  font-style: normal;  
+}
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-image: url(images/working.png);
+    background-size:cover;
+  }
+  #countdown-container {
+    text-align: center;
+  }
+  #countdown-subtitle {
+    font-family:LkHappy;
+    font-size: 20px;
+    color: #666;
+  }
+  #countdown {
+    font-family:LkHappy;
+    font-size: 48px;
+    margin-top: 10px;
+    color: #000; /* 初始颜色 */
+    animation: colorChange 8s infinite; /* 渐变动画 */
+  }
+
+  /* 渐变动画关键帧 */
+  @keyframes colorChange {
+    0%, 100% {
+      color: rgb(0, 0, 0); /* 黑色 */
+    }
+    /* 动态生成的颜色关键帧将在JavaScript中添加 */
+  }
+</style>
+</head>
+<body>
+<div id="countdown-container">
+  <div id="countdown-subtitle">距离下班还有：</div>
+  <div id="countdown">加载中...</div>
+</div>
+
+<script>
+// 定义上班和下班时间
+const workStart = new Date().setHours(8, 30, 0, 0);
+const workEnd = new Date().setHours(21, 0, 0, 0);
+
+// 随机生成颜色
+function getRandomColor() {
+  const letters = '0123456789ABCDEF';
+  let color = '#';
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
+// 添加关键帧到CSS动画
+function addKeyframes() {
+  const steps = 5; // 颜色变化的步骤数
+  let keyframes = document.querySelector('#colorChangeKeyframes');
+  if (!keyframes) {
+    keyframes = document.createElement('style');
+    keyframes.id = 'colorChangeKeyframes';
+    document.head.appendChild(keyframes);
+  }
+  let css = '';
+  for (let i = 1; i <= steps; i++) {
+    const percentage = (i / steps) * 100;
+    const color = getRandomColor();
+    css += ` ${percentage}% { color: ${color}; }`;
+  }
+  keyframes.textContent = `@keyframes colorChange {${css}}`;
+}
+
+// 获取当前时间
+function getCurrentTime() {
+  return new Date();
+}
+
+// 计算倒计时
+function calculateCountdown() {
+  const now = getCurrentTime();
+  const remainingTime = workEnd - now;
+
+  if (remainingTime <= 0) {
+    window.location.href = 'workend.html';
+    return;
+  }
+
+  const hours = Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+
+  document.getElementById('countdown').textContent =
+        hours + "小时 " + minutes + "分钟 " + seconds + "秒 ";
+}
+
+// 每秒更新倒计时
+let intervalId = setInterval(calculateCountdown, 1000);
+
+// 初始调用
+calculateCountdown();
+
+// 添加关键帧并启动动画
+addKeyframes();
+</script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>下班倒计时</title>
+<style>
+  @font-face {
+  font-family: 'LkHappy'; 
+  src: url('fonts/font.ttf') format('truetype');  
+  font-weight: normal;  
+  font-style: normal;  
+}
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-image: url(images/workend.jpg);
+    background-size: cover;
+  }
+  #countdown-container {
+  display: flex;
+  flex-direction: column; /* 使文本垂直排列 */
+  align-items: flex-end; /* 使文本容器向左对齐 */
+  margin-left: auto; /* 将容器向右移动，自动填充左边距 */
+  margin-right: 20px; /* 设置右边距，可根据需要调整 */
+  text-align: center;
+}
+  #countdown {
+    font-family: LkHappy;
+    font-size: 48px;
+    margin-top: 10px;
+    color: #000; /* 初始颜色 */
+    animation: colorChange 10s infinite; /* 渐变动画 */
+  }
+  #countdown-subtitle {
+    font-family: LkHappy;
+    font-size: 18px;
+  }
+</style>
+</head>
+<body>
+<div id="countdown-container">
+  <div id="countdown">下班啦！</div>
+  <div id="countdown-subtitle">工作一天辛苦啦！</div>
+</div>
+
+<script>
+// 随机生成颜色
+function getRandomColor() {
+  const letters = '0123456789ABCDEF';
+  let color = '#';
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
+// 添加关键帧到CSS动画
+function addKeyframes() {
+  const steps = 10; // 颜色变化的步骤数
+  let css = '@keyframes colorChange {';
+  for (let i = 0; i <= steps; i++) {
+    const percentage = (i / steps) * 100;
+    css += ` ${percentage}% { color: ${getRandomColor()}; }`;
+  }
+  css += ' }';
+  const styleSheet = document.createElement('style');
+  document.head.appendChild(styleSheet);
+  styleSheet.textContent = css;
+}
+
+// 初始调用
+addKeyframes(); // 确保在页面加载时添加关键帧
+</script>
+</body>
+</html>
