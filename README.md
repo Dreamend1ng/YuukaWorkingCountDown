@@ -17,6 +17,9 @@
 时间和下班文字颜色是随机渐变的
 
 预览图：
+
+
+
 ![eac83690db65855caa0e6a11152732d9](https://github.com/user-attachments/assets/68d254ed-84c6-4872-8d6a-da068c2a4316)
 ![7d736c72d3c9e0bd1d23ff9aa6be399b](https://github.com/user-attachments/assets/a2a10411-59d4-41fc-8869-a43ab247f41d)
 ![b449c9f5-9f28-45bf-862b-2d4dd6a89836](https://github.com/user-attachments/assets/9a57215d-cccf-44e3-98ab-532323c5d408)
